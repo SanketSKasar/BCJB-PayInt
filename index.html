@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+        <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    </head>
+    <body>
+        <h1>Payment for selected plan : </h1>
+
+    Name : <input type = "text" id = "customerName"/> <br><br>
+    email ID : <input type = "text" id = "customerEmail"/> <br><br>
+    phone no : <input type="text" id = "customerPhone" /> <br><br>
+    Amount : <input type="text" id="amount"/><br><br>
+   <input type="button" value="Pay" id="payButton" />
+
+   
+
+<script>
+
+
+
+$("#payButton").click(function(e){
+    var options = {
+    "key": "rzp_test_EfogleCA7FR9O2",
+    "amount": $("#amount").val(),
+    "name": "BC JukeBox",
+    "description": "Subscription 1 month",
+    "handler": function (response){
+        alert(response.razorpay_payment_id);
+
+         $.ajax({
+            url: "https://api.razorpay.com/v1/payments/"+response.razorpay_payment_id,
+            type: "get", //send it through get method
+            headers: {
+    "Authorization": "Basic " + btoa("rzp_test_EfogleCA7FR9O2" + ":" + "nrfztZ3weNdpipS3u8vZCttD")
+  },
+            success: function(response) {
+            alert(response);
+            },
+            error: function(xhr) {
+                alert("Error");
+            }  
+});
+        
+        },
+    "prefill": {
+        "name": $("#customerName").val().trim(),
+        "email": $("#customerEmail").val().trim(),
+        "contact" : $("#customerPhone").val().trim()
+        },
+    "notes": {
+        "address": "Hello World"
+        }
+};
+var rzp1 = new Razorpay(options);
+    rzp1.open();
+    e.preventDefault();
+});
+</script>
+    </script>
+
+    </body>
+</html>
