@@ -16,7 +16,7 @@
 
 <script>
 
-
+var paymentID="";
 
 $("#payButton").click(function(e){
     var options = {
@@ -26,13 +26,25 @@ $("#payButton").click(function(e){
     "description": "Subscription 1 month",
     "handler": function (response){
         alert(response.razorpay_payment_id);
-
-         $.ajax({
-            url: "https://api.razorpay.com/v1/payments/"+response.razorpay_payment_id,
+        paymentID=response.razorpay_payment_id;
+        
+      /*  
+        function make_base_auth() {
+  var tok = "rzp_test_EfogleCA7FR9O2" + ':' + "nrfztZ3weNdpipS3u8vZCttD";
+  var hash = btoa(tok);
+  return "Basic " + hash;
+}
+    
+$.ajax({
+            url: "https://api.razorpay.com/v1/payments/"+paymentID,
             type: "get", //send it through get method
+             datatype: "json",
             headers: {
-    "Authorization": "Basic " + btoa("rzp_test_EfogleCA7FR9O2" + ":" + "nrfztZ3weNdpipS3u8vZCttD")
-  },
+                "Authorization": "Basic " + btoa("rzp_test_EfogleCA7FR9O2" + ":" + "nrfztZ3weNdpipS3u8vZCttD")
+            },
+            
+           
+             
             success: function(response) {
             alert(response);
             },
@@ -40,6 +52,8 @@ $("#payButton").click(function(e){
                 alert("Error");
             }  
 });
+
+*/        
         
         },
     "prefill": {
@@ -55,6 +69,10 @@ var rzp1 = new Razorpay(options);
     rzp1.open();
     e.preventDefault();
 });
+    
+// Tring to get payment details (not for actual implementation) ---
+    
+
 </script>
     </script>
 
